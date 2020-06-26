@@ -5,7 +5,7 @@ import Select from 'react-select';
 import axios from 'axios';
 
 function getItemManifest() {
-  return axios.get('http://127.0.0.1:8000/item_manifest/')
+  return axios.get('https://api.ddsch.com/item_manifest/')
       .then((response) => {
         return response.data;
       },
@@ -17,7 +17,8 @@ export default class SingleSelect extends React.Component {
     super(props);
     this.state = {
       CurrentEntityId: undefined,
-      SampleEntityId: [],
+      EntityList: [],
+
     };
   }
 
@@ -28,7 +29,7 @@ export default class SingleSelect extends React.Component {
     getItemManifest().then((data) => {
       this.setState(
           {
-            SampleEntityId: data,
+            EntityList: data,
           });
     });
   }
@@ -38,10 +39,10 @@ export default class SingleSelect extends React.Component {
       <Select
         className="basic-single"
         classNamePrefix="select"
-        defaultValue={{entity_id: '6255', item_id: 'hmg03_gorgona02_shop'}}
+        defaultValue={{entity_id: '6255', item_id: 'hmg03_gorgona02_shop', name: 'gorgona stuff'}}
         name="item manifest"
         isClearable={true}
-        options={this.state.SampleEntityId}
+        options={this.state.EntityList}
         // maping: value: entity_id, label: item_id
         getOptionValue={(option) => option.entity_id}
         getOptionLabel={(option) => option.item_id}

@@ -9,7 +9,7 @@ import axios from 'axios';
 const Plot = createPlotlyComponent(Plotly);
 
 function getEntityData(entity_id) {
-  return axios.get('http://127.0.0.1:8000/bulk_items/?entity_id='+entity_id)
+  return axios.get('https://api.ddsch.com/bulk_items/?entity_id='+entity_id)
       .then((response) => {
         return response.data;
       },
@@ -22,7 +22,7 @@ class ItemList extends React.Component {
     this.state = {
       // TODO: add weapon name as state from TODO APIs, e.g. entity_name: 'AK-12',
       // eslint-disable-next-line react/prop-types
-      entity_id: this.props.entity_id,
+      entity: this.props.entity,
       time_frame: [],
       min_price: [],
       count: [],
@@ -32,17 +32,17 @@ class ItemList extends React.Component {
   componentDidUpdate(prevProps) {
     console.log('plot updated');
     // eslint-disable-next-line react/prop-types
-    if (this.props.entity_id !== prevProps.entity_id) {
+    if (this.props.entity !== prevProps.entity) {
       // eslint-disable-next-line react/prop-types
       console.log('entity_id changed');
       // eslint-disable-next-line react/prop-types
-      getEntityData(this.props.entity_id).then((data) => {
+      getEntityData(this.props.entity.entity_id).then((data) => {
         this.setState(
             {
               // TODO: add weapon name as state from TODO APIs, e.g. entity_name: 'AK-12',
               // unix timestamp in JS is calculated by milliseconds
               // eslint-disable-next-line react/prop-types
-              entity_id: this.props.entity_id,
+              entity: this.props.entity,
               time_frame: data.map((x) => x['entity_timestamp']*1000),
               min_price: data.map((x) => x['min_price']),
               count: data.map((x) => x['entity_count']),
@@ -56,7 +56,7 @@ class ItemList extends React.Component {
   componentDidMount() {
     console.log('plot mounted');
     // eslint-disable-next-line react/prop-types
-    getEntityData(this.props.entity_id).then((data) => {
+    getEntityData(this.props.entity.entity_id).then((data) => {
       this.setState(
           {
             // unix timestamp in JS is calculated by milliseconds
@@ -94,7 +94,7 @@ class ItemList extends React.Component {
             width: 1280,
             height: 600,
             // TODO: use API to convert entity_id to real weapon name
-            title: this.state.entity_id,
+            title: this.state.entity.item_id,
             xaxis: {type: 'date'},
             yaxis: {
               title: 'min_price (K)',
@@ -110,6 +110,19 @@ class ItemList extends React.Component {
             },
             showlegend: true,
             autosize: true,
+            images: [
+              {
+                x: 1,
+                y: 1.05,
+                sizex: 0.2,
+                sizey: 0.2,
+                source: `https://wf.cdn.gmru.net/static/wf.mail.ru/img/main/items/${this.state.entity.item_id}.png`,
+                xanchor: 'right',
+                xref: 'paper',
+                yanchor: 'bottom',
+                yref: 'paper',
+              },
+            ],
           }
         }
         config={{responsive: true}}
