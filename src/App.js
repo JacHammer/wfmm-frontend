@@ -6,11 +6,11 @@ import './App.css';
 import ItemList from './ItemList';
 import SearchBar from './SearchBar';
 function App() {
-  const [e, setEntity] = useState({entity_id: '6255', item_id: 'hmg03_gorgona02_shop', name: 'gorgona stuff'});
+  const [e, setEntity] = useState({entity_id: '6109', item_id: 'sr47_gorgona02_shop', name: 'gorgona stuff'});
   return (
     <div className="App">
       {/* check callback from Select component */}
-      <SearchBar onUserInputChange={(e) => (e === null) ? setEntity(e) : setEntity(e)}/>
+      <SearchBar onUserInputChange={(e) => (e === null || e === undefined) ? setEntity({entity_id: '6109', item_id: 'sr47_gorgona02_shop', name: 'gorgona stuff'}) : setEntity(e)}/>
       <ItemList entity={e}/>
     </div>
   );

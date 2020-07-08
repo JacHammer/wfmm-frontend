@@ -8,12 +8,14 @@ import axios from 'axios';
 
 const Plot = createPlotlyComponent(Plotly);
 
-function getEntityData(entity_id) {
-  return axios.get('https://api.ddsch.com/bulk_items/?entity_id='+entity_id)
-      .then((response) => {
-        return response.data;
-      },
-      );
+async function getEntityData(entity) {
+  if (entity === null || entity === undefined) {
+    const default_response = await axios.get('https://api.ddsch.com/bulk_items/?entity_id=6109');
+    return default_response.data;
+  } else {
+    const response = await axios.get('https://api.ddsch.com/bulk_items/?entity_id=' + entity.entity_id);
+    return response.data;
+  };
 }
 
 class ItemList extends React.Component {
@@ -36,7 +38,7 @@ class ItemList extends React.Component {
       // eslint-disable-next-line react/prop-types
       console.log('entity_id changed');
       // eslint-disable-next-line react/prop-types
-      getEntityData(this.props.entity.entity_id).then((data) => {
+      getEntityData(this.props.entity).then((data) => {
         this.setState(
             {
               // TODO: add weapon name as state from TODO APIs, e.g. entity_name: 'AK-12',
@@ -56,7 +58,7 @@ class ItemList extends React.Component {
   componentDidMount() {
     console.log('plot mounted');
     // eslint-disable-next-line react/prop-types
-    getEntityData(this.props.entity.entity_id).then((data) => {
+    getEntityData(this.props.entity).then((data) => {
       this.setState(
           {
             // unix timestamp in JS is calculated by milliseconds

@@ -4,12 +4,9 @@ import React from 'react';
 import Select from 'react-select';
 import axios from 'axios';
 
-function getItemManifest() {
-  return axios.get('https://api.ddsch.com/item_manifest/')
-      .then((response) => {
-        return response.data;
-      },
-      );
+async function getItemManifest() {
+  const response = await axios.get('https://api.ddsch.com/item_manifest/');
+  return response.data;
 }
 
 export default class SingleSelect extends React.Component {
@@ -39,7 +36,7 @@ export default class SingleSelect extends React.Component {
       <Select
         className="basic-single"
         classNamePrefix="select"
-        defaultValue={{entity_id: '6255', item_id: 'hmg03_gorgona02_shop', name: 'gorgona stuff'}}
+        defaultValue={{entity_id: '6109', item_id: 'sr47_gorgona02_shop', name: 'gorgona stuff'}}
         name="item manifest"
         isClearable={true}
         options={this.state.EntityList}
