@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 
+# notepad++ backup file
+*.bak
 # testing
 /coverage
 
