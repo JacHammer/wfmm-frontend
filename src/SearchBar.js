@@ -36,13 +36,13 @@ export default class SingleSelect extends React.Component {
       <Select
         className="basic-single"
         classNamePrefix="select"
-        defaultValue={{entity_id: '6109', item_id: 'sr47_gorgona02_shop', name: 'gorgona stuff'}}
+        defaultValue={{entity_id: '6109', item_id: 'sr47_gorgona02_shop', title_en: 'Medusa Truvelo CMS 20x42mm'}}
         name="item manifest"
         isClearable={true}
         options={this.state.EntityList}
         // maping: value: entity_id, label: item_id
         getOptionValue={(option) => option.entity_id}
-        getOptionLabel={(option) => option.item_id}
+        getOptionLabel={(option) => option.title_en}
 
         // eslint-disable-next-line react/prop-types
         onChange={this.props.onUserInputChange}

@@ -96,7 +96,7 @@ class ItemList extends React.Component {
             width: 1280,
             height: 600,
             // TODO: use API to convert entity_id to real weapon name
-            title: this.state.entity.item_id,
+            title: this.state.entity.title_en,
             xaxis: {type: 'date'},
             yaxis: {
               title: 'min_price (K)',
