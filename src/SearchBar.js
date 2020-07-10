@@ -20,8 +20,6 @@ export default class SingleSelect extends React.Component {
   }
 
   componentDidMount() {
-    // TODO: use API to fetch entity_id
-    // TODO: use API to convert entity_id to real name
     console.log('Search bar mounted');
     getItemManifest().then((data) => {
       this.setState(

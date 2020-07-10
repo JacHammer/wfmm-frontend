@@ -22,7 +22,6 @@ class ItemList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // TODO: add weapon name as state from TODO APIs, e.g. entity_name: 'AK-12',
       // eslint-disable-next-line react/prop-types
       entity: this.props.entity,
       time_frame: [],
@@ -41,7 +40,6 @@ class ItemList extends React.Component {
       getEntityData(this.props.entity).then((data) => {
         this.setState(
             {
-              // TODO: add weapon name as state from TODO APIs, e.g. entity_name: 'AK-12',
               // unix timestamp in JS is calculated by milliseconds
               // eslint-disable-next-line react/prop-types
               entity: this.props.entity,
@@ -95,7 +93,6 @@ class ItemList extends React.Component {
           {
             width: 1280,
             height: 600,
-            // TODO: use API to convert entity_id to real weapon name
             title: this.state.entity.title_en,
             xaxis: {type: 'date'},
             yaxis: {
