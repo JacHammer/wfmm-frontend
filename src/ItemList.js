@@ -78,6 +78,7 @@ class ItemList extends React.Component {
             type: 'scatter',
             mode: 'lines',
             marker: {color: '#ea904f'},
+            line: {shape: 'hv'},
           },
           {
             name: 'count',
@@ -87,6 +88,7 @@ class ItemList extends React.Component {
             type: 'scatter',
             mode: 'lines',
             marker: {color: '#00a6a0'},
+            line: {shape: 'hv'},
           },
         ]}
         layout={
