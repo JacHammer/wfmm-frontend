@@ -10,8 +10,13 @@ function App() {
   return (
     <div className="App">
       {/* check callback from Select component */}
-      <SearchBar onUserInputChange={(e) => (e === null || e === undefined) ? setEntity({entity_id: '6109', item_id: 'sr47_gorgona02_shop', title_en: 'Medusa Truvelo CMS 20x42mm'}) : setEntity(e)}/>
-      <ItemList entity={e}/>
+      <div className="main-search-bar">
+        <SearchBar onUserInputChange={(e) => (e === null || e === undefined) ? setEntity({entity_id: '6109', item_id: 'sr47_gorgona02_shop', title_en: 'Medusa Truvelo CMS 20x42mm'}) : setEntity(e)}/>
+      </div>
+
+      <div className="main-plotly-graph">
+        <ItemList entity={e} />
+      </div>
     </div>
   );
 }

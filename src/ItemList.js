@@ -93,8 +93,6 @@ class ItemList extends React.Component {
         ]}
         layout={
           {
-            width: 1280,
-            height: 600,
             title: this.state.entity.title_en,
             xaxis: {type: 'date'},
             yaxis: {
@@ -126,6 +124,8 @@ class ItemList extends React.Component {
             ],
           }
         }
+        style={{width: '100%', height: '100%'}}
+        useResizeHandler= {true}
         config={{responsive: true}}
       />
 
