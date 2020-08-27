@@ -12,6 +12,8 @@
 
 # production
 /build
+/dist
+/wfmm
 
 # misc
 .DS_Store
@@ -20,6 +22,8 @@
 .env.test.local
 .env.production.local
 
+# debug output
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+stats.json
