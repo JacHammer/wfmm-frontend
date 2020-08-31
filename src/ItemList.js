@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
@@ -22,7 +23,6 @@ class ItemList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // eslint-disable-next-line react/prop-types
       entity: this.props.entity,
       time_frame: [],
       min_price: [],
@@ -32,16 +32,12 @@ class ItemList extends React.Component {
 
   componentDidUpdate(prevProps) {
     console.log('plot updated');
-    // eslint-disable-next-line react/prop-types
     if (this.props.entity !== prevProps.entity) {
-      // eslint-disable-next-line react/prop-types
       console.log('entity_id changed');
-      // eslint-disable-next-line react/prop-types
       getEntityData(this.props.entity).then((data) => {
         this.setState(
             {
               // unix timestamp in JS is calculated by milliseconds
-              // eslint-disable-next-line react/prop-types
               entity: this.props.entity,
               time_frame: data.map((x) => x['entity_timestamp']*1000),
               min_price: data.map((x) => x['min_price']),
@@ -55,7 +51,6 @@ class ItemList extends React.Component {
 
   componentDidMount() {
     console.log('plot mounted');
-    // eslint-disable-next-line react/prop-types
     getEntityData(this.props.entity).then((data) => {
       this.setState(
           {

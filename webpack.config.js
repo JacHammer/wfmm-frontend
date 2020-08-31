@@ -33,8 +33,10 @@ module.exports = {
     filename: 'bundle.js',
   },
   devServer: {
+    historyApiFallback: true,
     contentBase: '/wfmm',
     publicPath: '/wfmm',
+    //    contentBasePublicPath: '/wfmm',
     allowedHosts: [
       '.ddsch.com',
       'ddsch.com',
