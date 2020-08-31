@@ -13,7 +13,7 @@
   height:800px;
 }
 .main-side-bar{
-  position: absolute;
+  position: relative;
 }
 
 .main-search-bar{

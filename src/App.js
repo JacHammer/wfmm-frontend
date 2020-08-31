@@ -10,8 +10,8 @@ function App() {
   const [e, setEntity] = useState({entity_id: '6109', item_id: 'sr47_gorgona02_shop', title_en: 'Medusa Truvelo CMS 20x42mm'});
   return (
     <div className="App">
-      <div>
-        <ResponsiveDrawer className="main-side-bar"/>
+      <div className="main-side-bar">
+        <ResponsiveDrawer />
       </div>
       {/* check callback from Select component */}
       <div className="main">
