@@ -11,13 +11,23 @@ const Plot = createPlotlyComponent(Plotly);
 
 async function getEntityData(entity) {
   if (entity === null || entity === undefined) {
-    const default_response = await axios.get('https://api.ddsch.com/bulk_items/?entity_id=6109');
+    // const default_response = await axios.get('https://api.ddsch.com/ru/bulk_items/?entity_id=3897');
+    const default_response = await axios.get('https://api.ddsch.com/bulk_items/?entity_id=3897');
     return default_response.data;
+  } else if (entity.region == 'eu') {
+    // const response = await axios.get('https://api.ddsch.com/ru/bulk_items/?entity_id=' + entity.entity_id);
+    const response = await axios.get('https://api.ddsch.com/bulk_items/?entity_id=' + entity.entity_id);
+    return response.data;
+  } else if (entity.region == 'ru') {
+    // const response = await axios.get('https://api.ddsch.com/ru/bulk_items/?entity_id=' + entity.entity_id);
+    const response = await axios.get('https://api.ddsch.com/ru/bulk_items/?entity_id=' + entity.entity_id);
+    return response.data;
   } else {
     const response = await axios.get('https://api.ddsch.com/bulk_items/?entity_id=' + entity.entity_id);
     return response.data;
-  };
-}
+  }
+};
+
 
 class ItemList extends React.Component {
   constructor(props) {

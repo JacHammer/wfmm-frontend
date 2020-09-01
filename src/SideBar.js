@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 import React from 'react';
@@ -56,10 +57,11 @@ const useStyles = makeStyles((theme) => ({
 function ResponsiveDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [drawerState, setDrawerState] = React.useState({'mobileOpen': false, 'itemClicked': 'eu'});
 
+  // update state of drawer once the menu button is clicked
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    setDrawerState((drawerState) => ({...drawerState, 'mobileOpen': !drawerState['mobileOpen']}));
   };
 
   const drawer = (
@@ -68,7 +70,10 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
         {['EU', 'RU'].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={text} onClick={()=>{
+            setDrawerState({...drawerState, 'itemClicked': text.toLowerCase()});
+            props.parentCallBack(text.toLowerCase());
+          }}>
             <ListItemIcon>{<PublicSharpIcon/>}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -77,7 +82,7 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
         {['About'].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={text} onClick={console.log('About')}>
             <ListItemIcon>{<InfoSharpIcon/>}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -114,7 +119,7 @@ function ResponsiveDrawer(props) {
             // container={container}
             variant="temporary"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={mobileOpen}
+            open={drawerState['mobileOpen']}
             onClose={handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper,
