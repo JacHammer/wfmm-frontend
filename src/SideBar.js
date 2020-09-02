@@ -70,10 +70,13 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
         {['EU', 'RU'].map((text, index) => (
-          <ListItem button key={text} onClick={()=>{
-            setDrawerState({...drawerState, 'itemClicked': text.toLowerCase()});
-            props.parentCallBack(text.toLowerCase());
-          }}>
+          <ListItem
+            button
+            key={text}
+            onClick={()=>{
+              setDrawerState({...drawerState, 'itemClicked': text.toLowerCase()});
+              props.parentCallBack(text.toLowerCase());
+            }}>
             <ListItemIcon>{<PublicSharpIcon/>}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -82,7 +85,9 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
         {['About'].map((text, index) => (
-          <ListItem button key={text} onClick={console.log('About')}>
+          <ListItem button key={text} onClick={()=> {
+            console.log('About');
+          }}>
             <ListItemIcon>{<InfoSharpIcon/>}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>

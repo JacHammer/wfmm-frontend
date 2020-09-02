@@ -12,6 +12,7 @@ const Plot = createPlotlyComponent(Plotly);
 async function getEntityData(entity) {
   if (entity === null || entity === undefined) {
     // const default_response = await axios.get('https://api.ddsch.com/ru/bulk_items/?entity_id=3897');
+    console.log('Entity not specified');
     const default_response = await axios.get('https://api.ddsch.com/bulk_items/?entity_id=3897');
     return default_response.data;
   } else if (entity.region == 'eu') {
@@ -23,6 +24,7 @@ async function getEntityData(entity) {
     const response = await axios.get('https://api.ddsch.com/ru/bulk_items/?entity_id=' + entity.entity_id);
     return response.data;
   } else {
+    console.log(`OUTSIDE LOOP! ${entity.region} ${entity.entity_id} ${entity.item_id}`);
     const response = await axios.get('https://api.ddsch.com/bulk_items/?entity_id=' + entity.entity_id);
     return response.data;
   }
@@ -40,23 +42,25 @@ class ItemList extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
-    console.log('plot updated');
-    if (this.props.entity !== prevProps.entity) {
-      console.log('entity_id changed');
-      getEntityData(this.props.entity).then((data) => {
-        this.setState(
-            {
-              // unix timestamp in JS is calculated by milliseconds
-              entity: this.props.entity,
-              time_frame: data.map((x) => x['entity_timestamp']*1000),
-              min_price: data.map((x) => x['min_price']),
-              count: data.map((x) => x['entity_count']),
-            });
-      });
-    } else {
-      console.log('no change on entity_id');
-    }
+  componentDidUpdate(prevProps, prevState) {
+    console.log(`When plot updated, curr props region is: ${this.props.entity.region}`);
+    const prevRegion = prevProps.entity.region;
+    const currRegion = this.props.entity.region;
+    const prevEntityId = prevProps.entity.entity_id;
+    const currEntityId = this.props.entity.entity_id;
+    if (prevRegion != currRegion || prevEntityId != currEntityId) {
+      getEntityData(this.props.entity)
+          .then((data) => {
+            this.setState(
+                {
+                  // unix timestamp in JS is calculated by milliseconds
+                  entity: {...this.props.entity},
+                  time_frame: data.map((x) => x['entity_timestamp']*1000),
+                  min_price: data.map((x) => x['min_price']),
+                  count: data.map((x) => x['entity_count']),
+                });
+          });
+    };
   }
 
   componentDidMount() {
@@ -64,6 +68,7 @@ class ItemList extends React.Component {
     getEntityData(this.props.entity).then((data) => {
       this.setState(
           {
+            entity: this.props.entity,
             // unix timestamp in JS is calculated by milliseconds
             time_frame: data.map((x) => x['entity_timestamp']*1000),
             min_price: data.map((x) => x['min_price']),
@@ -98,7 +103,7 @@ class ItemList extends React.Component {
         ]}
         layout={
           {
-            title: this.state.entity.title_en,
+            title: `${this.state.entity.region} ${this.state.entity.title_en}`,
             xaxis: {type: 'date'},
             yaxis: {
               title: 'min_price (K)',

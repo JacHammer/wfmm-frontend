@@ -23,8 +23,7 @@ export default class SingleSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      region: 'eu',
-      CurrentEntityId: undefined,
+      entity: {...this.props.entity},
       EntityList: [],
 
     };
@@ -32,28 +31,32 @@ export default class SingleSelect extends React.Component {
 
   componentDidMount() {
     console.log('Search bar mounted');
-    getItemManifest('eu').then((data) => {
+    getItemManifest(this.props.entity.region).then((data) => {
       this.setState(
           {
+            entity: {...this.props.entity},
             EntityList: data,
           });
     });
   }
-  componentDidUpdate(prevProps) {
+
+  componentDidUpdate(prevProps, prevState) {
+    const prevRegion = prevProps.entity.region;
+    const currRegion = this.props.entity.region;
+    const prevEntityId = prevProps.entity.entity_id;
+    const currEntityId = this.props.entity.entity_id;
     console.log('Search bar starts updating');
-    console.log(`before: ${prevProps.entity.region} after: ${this.props.entity.region}`);
-    if (this.props.entity.region !== prevProps.entity.region) {
-      console.log(`region changed: ${this.props.entity.region}`);
-      getItemManifest(this.props.entity.region).then((data) => {
-        this.setState(
-            {
-              region: this.props.entity.region,
-              EntityList: data,
-            });
-      });
-    } else {
-      console.log('no change on region');
-    }
+    if (prevRegion != currRegion || prevEntityId != currEntityId) {
+      console.log(`${this.state.entity.region}, ${prevState.entity.region}`);
+      return getItemManifest(this.props.entity.region)
+          .then((data) => {
+            this.setState(
+                {
+                  entity: {...this.props.entity},
+                  EntityList: data,
+                });
+          });
+    };
   }
 
   render() {
@@ -62,7 +65,7 @@ export default class SingleSelect extends React.Component {
         className="basic-single"
         classNamePrefix="select"
         // defaultValue={{entity_id: '4590', item_id: 'ar29_black03skin_shop', title_en: 'AK Alpha Onyx Skin'}}
-        defaultValue={{region: 'eu', entity_id: '6109', item_id: 'sr47_gorgona02_shop', title_en: 'Medusa Truvelo CMS 20x42mm'}}
+        defaultValue={{region: this.state.entity.region, entity_id: '6109', item_id: 'sr47_gorgona02_shop', title_en: 'Medusa Truvelo CMS 20x42mm'}}
         name="item manifest"
         isClearable={false}
         options={this.state.EntityList}
