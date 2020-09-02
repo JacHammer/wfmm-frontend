@@ -10,26 +10,25 @@ import axios from 'axios';
 const Plot = createPlotlyComponent(Plotly);
 
 async function getEntityData(entity) {
+  const euURL = 'https://api.ddsch.com/bulk_items/?entity_id=';
+  const ruURL = 'https://api.ddsch.com/ru/bulk_items/?entity_id=';
+  const defaultEntityUrl = 'https://api.ddsch.com/bulk_items/?entity_id=3897';
+
   if (entity === null || entity === undefined) {
-    // const default_response = await axios.get('https://api.ddsch.com/ru/bulk_items/?entity_id=3897');
-    console.log('Entity not specified');
-    const default_response = await axios.get('https://api.ddsch.com/bulk_items/?entity_id=3897');
+    const default_response = await axios.get(defaultEntityUrl);
     return default_response.data;
   } else if (entity.region == 'eu') {
-    // const response = await axios.get('https://api.ddsch.com/ru/bulk_items/?entity_id=' + entity.entity_id);
-    const response = await axios.get('https://api.ddsch.com/bulk_items/?entity_id=' + entity.entity_id);
-    return response.data;
+    const euResponse = await axios.get(euURL + entity.entity_id);
+    return euResponse.data;
   } else if (entity.region == 'ru') {
-    // const response = await axios.get('https://api.ddsch.com/ru/bulk_items/?entity_id=' + entity.entity_id);
-    const response = await axios.get('https://api.ddsch.com/ru/bulk_items/?entity_id=' + entity.entity_id);
-    return response.data;
+    const ruResponse = await axios.get(ruURL + entity.entity_id);
+    return ruResponse.data;
   } else {
-    console.log(`OUTSIDE LOOP! ${entity.region} ${entity.entity_id} ${entity.item_id}`);
-    const response = await axios.get('https://api.ddsch.com/bulk_items/?entity_id=' + entity.entity_id);
+    console.log(`Entity received but region is not defined: ${entity.region}; ${entity.entity_id}; ${entity.item_id}`);
+    const response = await axios.get(euURL + entity.entity_id);
     return response.data;
   }
 };
-
 
 class ItemList extends React.Component {
   constructor(props) {
@@ -42,37 +41,41 @@ class ItemList extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log(`When plot updated, curr props region is: ${this.props.entity.region}`);
-    const prevEntityId = prevProps.entity.entity_id;
-    const currEntityId = this.props.entity.entity_id;
-    if (prevEntityId != currEntityId) {
-      getEntityData(this.props.entity)
-          .then((data) => {
-            this.setState(
-                {
-                  // unix timestamp in JS is calculated by milliseconds
-                  entity: {...this.props.entity},
-                  time_frame: data.map((x) => x['entity_timestamp']*1000),
-                  min_price: data.map((x) => x['min_price']),
-                  count: data.map((x) => x['entity_count']),
-                });
-          });
-    };
-  }
-
+  // plot mounted for the first time
   componentDidMount() {
     console.log('plot mounted');
     getEntityData(this.props.entity).then((data) => {
       this.setState(
           {
-            entity: this.props.entity,
+            // set new entity as plot state
+            entity: {...this.props.entity},
             // unix timestamp in JS is calculated by milliseconds
             time_frame: data.map((x) => x['entity_timestamp']*1000),
             min_price: data.map((x) => x['min_price']),
             count: data.map((x) => x['entity_count']),
           });
     });
+  }
+
+  // update plot when entity properties except region changed
+  componentDidUpdate(prevProps, prevState) {
+    const prevEntityId = prevProps.entity.entity_id;
+    const currEntityId = this.props.entity.entity_id;
+    // update plot if entity_id from the props changed
+    if (prevEntityId != currEntityId) {
+      getEntityData(this.props.entity)
+          .then((data) => {
+            this.setState(
+                {
+                  // set new entity as plot state
+                  entity: {...this.props.entity},
+                  // unix timestamp in JS is calculated by milliseconds
+                  time_frame: data.map((x) => x['entity_timestamp']*1000),
+                  min_price: data.map((x) => x['min_price']),
+                  count: data.map((x) => x['entity_count']),
+                });
+          });
+    };
   }
 
   render() {
@@ -101,7 +104,7 @@ class ItemList extends React.Component {
         ]}
         layout={
           {
-            title: `${this.state.entity.region} ${this.state.entity.title_en}`,
+            title: `${this.state.entity.region.toUpperCase()} ${this.state.entity.title_en}`,
             xaxis: {type: 'date'},
             yaxis: {
               title: 'min_price (K)',

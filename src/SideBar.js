@@ -75,7 +75,7 @@ function ResponsiveDrawer(props) {
             key={text}
             onClick={()=>{
               setDrawerState({...drawerState, 'itemClicked': text.toLowerCase()});
-              props.parentCallBack(text.toLowerCase());
+              props.setRegionToParent(text.toLowerCase());
             }}>
             <ListItemIcon>{<PublicSharpIcon/>}</ListItemIcon>
             <ListItemText primary={text} />

@@ -8,12 +8,12 @@ import ItemList from './ItemList';
 import SearchBar from './SearchBar';
 function App() {
   const [e, setEntity] = useState({placeholder: 1, region: 'eu', entity_id: '6109', item_id: 'sr47_gorgona02_shop', title_en: 'Medusa Truvelo CMS 20x42mm'});
-  // const [e, setEntity] = useState({entity_id: '4590', item_id: 'ar29_black03skin_shop', title_en: 'AK Alpha Onyx Skin'});
-
-  const callBack =(newRegion)=> {
+  // callback that allows drawer to set region
+  const setRegion =(newRegion)=> {
     setEntity({...e, region: newRegion});
   };
 
+  // callback to set entity properties
   const setNewEntity =(entity) => {
     if (entity === null || entity === undefined) {
       setEntity({placeholder: 1, region: 'eu', entity_id: '6109', item_id: 'sr47_gorgona02_shop', title_en: 'Medusa Truvelo CMS 20x42mm'});
@@ -25,11 +25,11 @@ function App() {
   return (
     <div className="App">
       <div className="main-side-bar">
-        <ResponsiveDrawer parentCallBack={callBack}/>
+        <ResponsiveDrawer setRegionToParent={setRegion}/>
       </div>
-      {/* check callback from Select component */}
       <div className="main">
         <div className="main-search-bar">
+          {/* check callback from Select component */}
           <SearchBar
             entity={e}
             onUserInputChange={(e) => {
@@ -38,11 +38,7 @@ function App() {
         </div>
 
         <div className="main-plotly-graph">
-          <ItemList
-            entity={{...e}}
-            parentCallBack={(e) => {
-              callBack(e);
-            }}/>
+          <ItemList entity={e}/>
         </div></div>
     </div>
   );
