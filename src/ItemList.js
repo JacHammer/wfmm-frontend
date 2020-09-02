@@ -44,11 +44,9 @@ class ItemList extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     console.log(`When plot updated, curr props region is: ${this.props.entity.region}`);
-    const prevRegion = prevProps.entity.region;
-    const currRegion = this.props.entity.region;
     const prevEntityId = prevProps.entity.entity_id;
     const currEntityId = this.props.entity.entity_id;
-    if (prevRegion != currRegion || prevEntityId != currEntityId) {
+    if (prevEntityId != currEntityId) {
       getEntityData(this.props.entity)
           .then((data) => {
             this.setState(
