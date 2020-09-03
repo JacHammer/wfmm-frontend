@@ -24,7 +24,7 @@ function App() {
   };
 
   return (
-    <SnackbarProvider maxSnack={3} dense>
+    <SnackbarProvider maxSnack={3} dense preventDuplicate>
       <div className="App">
         <div className="main-side-bar">
           <ResponsiveDrawer setRegionToParent={setRegion}/>
