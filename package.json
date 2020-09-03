@@ -2,7 +2,7 @@
   "name": "wfmm",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/wfmm",
+    "homepage": "/wfmm",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -21,7 +21,7 @@
     "react-virtualized": "^9.21.2"
   },
   "scripts": {
-    "start": "webpack-dev-server --open --mode development --progress",
+    "start": "webpack-dev-server --open --mode development --progress --hot --inline",
     "build": "webpack --mode production --progress",
     "server": "node server/app.js",
     "test": "react-scripts test",
@@ -55,7 +55,7 @@
     "css-loader": "^4.2.2",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.20.0",
-    "html-webpack-plugin": "^4.3.0",
+    "html-webpack-plugin": "^4.4.1",
     "react-router-dom": "^5.2.0",
     "style-loader": "^1.2.1",
     "terser-webpack-plugin": "^4.1.0",

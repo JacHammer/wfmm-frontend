@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const path = require('path');
 
 module.exports = {
   entry: {
@@ -28,15 +29,15 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   output: {
-    path: __dirname + '/wfmm',
+    path: path.resolve(__dirname, 'wfmm/'),
     publicPath: '/wfmm',
     filename: 'bundle.js',
   },
   devServer: {
-    historyApiFallback: true,
-    contentBase: '/wfmm',
+    hot: true,
+    contentBase: 'public',
     publicPath: '/wfmm',
-    //    contentBasePublicPath: '/wfmm',
+    contentBasePublicPath: '/wfmm',
     allowedHosts: [
       '.ddsch.com',
       'ddsch.com',
@@ -46,7 +47,7 @@ module.exports = {
   plugins: [
     new BundleAnalyzerPlugin({openAnalyzer: false}),
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: './public/entrypoint.html',
       filename: './index.html',
     }),
     new CopyWebpackPlugin({
