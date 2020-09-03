@@ -64,6 +64,7 @@ class ItemList extends React.Component {
     const currEntityId = this.props.entity.entity_id;
     // update plot if entity_id from the props changed
     if (prevEntityId != currEntityId) {
+      this.props.enqueueSnackbar(`Fetching info...`, {variant: 'info'});
       getEntityData(this.props.entity)
           .then((data) => {
             this.setState(
