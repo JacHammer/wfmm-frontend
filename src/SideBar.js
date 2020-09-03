@@ -18,6 +18,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {useSnackbar} from 'notistack';
 
 const drawerWidth = 240;
 
@@ -58,6 +59,7 @@ function ResponsiveDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [drawerState, setDrawerState] = React.useState({'mobileOpen': false, 'itemClicked': 'eu'});
+  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
   // update state of drawer once the menu button is clicked
   const handleDrawerToggle = () => {
@@ -76,6 +78,7 @@ function ResponsiveDrawer(props) {
             onClick={()=>{
               setDrawerState({...drawerState, 'itemClicked': text.toLowerCase()});
               props.setRegionToParent(text.toLowerCase());
+              enqueueSnackbar(`Marketplace region switched to ${text}`, {variant: 'info'});
             }}>
             <ListItemIcon>{<PublicSharpIcon/>}</ListItemIcon>
             <ListItemText primary={text} />

@@ -2,6 +2,7 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 import React, {useState} from 'react';
+import {SnackbarProvider} from 'notistack';
 import './App.css';
 import ResponsiveDrawer from './SideBar';
 import ItemList from './ItemList';
@@ -23,24 +24,26 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <div className="main-side-bar">
-        <ResponsiveDrawer setRegionToParent={setRegion}/>
-      </div>
-      <div className="main">
-        <div className="main-search-bar">
-          {/* check callback from Select component */}
-          <SearchBar
-            entity={e}
-            onUserInputChange={(e) => {
-              setNewEntity(e);
-            }}/>
+    <SnackbarProvider maxSnack={3} dense>
+      <div className="App">
+        <div className="main-side-bar">
+          <ResponsiveDrawer setRegionToParent={setRegion}/>
         </div>
+        <div className="main">
+          <div className="main-search-bar">
+            {/* check callback from Select component */}
+            <SearchBar
+              entity={e}
+              onUserInputChange={(e) => {
+                setNewEntity(e);
+              }}/>
+          </div>
 
-        <div className="main-plotly-graph">
-          <ItemList entity={e}/>
-        </div></div>
-    </div>
+          <div className="main-plotly-graph">
+            <ItemList entity={e}/>
+          </div></div>
+      </div>
+    </SnackbarProvider>
   );
 }
 

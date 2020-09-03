@@ -6,6 +6,7 @@ import React from 'react';
 import Plotly from 'plotly.js-basic-dist';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import axios from 'axios';
+import {withSnackbar} from 'notistack';
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -74,7 +75,9 @@ class ItemList extends React.Component {
                   min_price: data.map((x) => x['min_price']),
                   count: data.map((x) => x['entity_count']),
                 });
-          });
+          })
+          .then(() => this.props.enqueueSnackbar(`Successfully fetched ${this.state.entity.title_en} from ${this.state.entity.region.toUpperCase()}`, {variant: 'success'}))
+          .catch(() => this.props.enqueueSnackbar(`Failed to fetch data`, {variant: 'warning'}));
     };
   }
 
@@ -144,4 +147,4 @@ class ItemList extends React.Component {
   }
 }
 
-export default ItemList;
+export default withSnackbar(ItemList);
