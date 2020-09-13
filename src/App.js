@@ -24,7 +24,7 @@ function App() {
   };
 
   return (
-    <SnackbarProvider maxSnack={3} dense preventDuplicate>
+    <SnackbarProvider maxSnack={2} dense autoHideDuration={2000} transitionDuration={{enter: 100, exit: 100}}>
       <div className="App">
         <div className="main-side-bar">
           <ResponsiveDrawer setRegionToParent={setRegion}/>
