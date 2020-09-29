@@ -4,11 +4,10 @@
 import React from 'react';
 import Select from 'react-select';
 import axios from 'axios';
+import {euManifest, ruManifest} from './endpoint/Endpoint';
 
 // eu and ru have different entity_id-item_id mappings so we need to get these mappings when region changes
 async function getItemManifest(region) {
-  const euManifest = 'https://api.ddsch.com/item_manifest/';
-  const ruManifest = 'https://api.ddsch.com/ru/item_manifest/';
   if (region == 'eu') {
     const euResponse = await axios.get(euManifest);
     return euResponse.data;

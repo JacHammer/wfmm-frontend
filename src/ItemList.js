@@ -7,14 +7,11 @@ import Plotly from 'plotly.js-basic-dist';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import axios from 'axios';
 import {withSnackbar} from 'notistack';
+import {euURL, ruURL, defaultEntityUrl} from './endpoint/Endpoint';
 
 const Plot = createPlotlyComponent(Plotly);
 
 async function getEntityData(entity) {
-  const euURL = 'https://api.ddsch.com/bulk_items/?entity_id=';
-  const ruURL = 'https://api.ddsch.com/ru/bulk_items/?entity_id=';
-  const defaultEntityUrl = 'https://api.ddsch.com/bulk_items/?entity_id=3897';
-
   if (entity === null || entity === undefined) {
     const default_response = await axios.get(defaultEntityUrl);
     return default_response.data;

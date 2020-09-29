@@ -7,6 +7,7 @@ import './App.css';
 import ResponsiveDrawer from './SideBar';
 import ItemList from './ItemList';
 import SearchBar from './SearchBar';
+
 function App() {
   const [e, setEntity] = useState({placeholder: 1, region: 'eu', entity_id: '6109', item_id: 'sr47_gorgona02_shop', title_en: 'Medusa Truvelo CMS 20x42mm'});
   // callback that allows drawer to set region
