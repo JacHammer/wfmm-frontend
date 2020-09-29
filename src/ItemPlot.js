@@ -28,7 +28,7 @@ async function getEntityData(entity) {
   }
 };
 
-class ItemList extends React.Component {
+class ItemPlot extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -145,4 +145,4 @@ class ItemList extends React.Component {
   }
 }
 
-export default withSnackbar(ItemList);
+export default withSnackbar(ItemPlot);
