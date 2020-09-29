@@ -70,6 +70,7 @@ function ResponsiveDrawer(props) {
     <div >
       <div className={classes.toolbar} />
       <Divider />
+      {/* Region selector */}
       <List>
         {['EU', 'RU'].map((text, index) => (
           <ListItem
@@ -78,6 +79,7 @@ function ResponsiveDrawer(props) {
             onClick={()=>{
               setDrawerState({...drawerState, 'itemClicked': text.toLowerCase()});
               props.setRegionToParent(text.toLowerCase());
+              props.setShowItemPlotFromSideBar(true);
               enqueueSnackbar(`Marketplace region switched to ${text}`, {variant: 'info'});
             }}>
             <ListItemIcon>{<PublicSharpIcon/>}</ListItemIcon>
@@ -86,6 +88,21 @@ function ResponsiveDrawer(props) {
         ))}
       </List>
       <Divider />
+      {/* Marketplace status selector */}
+      <List>
+        <ListItem
+          button
+          key={'Status'}
+          onClick={()=>{
+            props.setShowItemPlotFromSideBar(false);
+            enqueueSnackbar(`Fetching marketplace status`, {variant: 'info'});
+          }}>
+          <ListItemIcon>{<PublicSharpIcon/>}</ListItemIcon>
+          <ListItemText primary={'Status'} />
+        </ListItem>
+      </List>
+      <Divider />
+      {/* About selector */}
       <List>
         {['About'].map((text, index) => (
           <ListItem button key={text} onClick={()=> {

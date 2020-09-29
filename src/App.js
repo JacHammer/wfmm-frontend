@@ -25,11 +25,14 @@ function App() {
     }
   };
 
+  const setShowItemPlotFromSideBar = (isShown) => {
+    setShowItemPlot(isShown);
+  };
 
   const renderSideBar = () => {
     return (
       <div className="main-side-bar">
-        <ResponsiveDrawer setRegionToParent={setRegion}/>
+        <ResponsiveDrawer setRegionToParent={setRegion} setShowItemPlotFromSideBar={setShowItemPlotFromSideBar}/>
       </div>
     );
   };
@@ -56,7 +59,7 @@ function App() {
   const renderStatePlot = () => {
     return (
       <div className="state-plotly-graph">
-        <StatePlot region = 'eu' />
+        <StatePlot region={'eu'} />
       </div>
     );
   };
