@@ -45,6 +45,8 @@ function StatePlot(props) {
         {
           name: 'status',
           x: [
+            1601100000,
+            1601189500,
             1601189527,
             1601189532,
             1601189537,
@@ -52,15 +54,18 @@ function StatePlot(props) {
             1601189547,
             1601189552,
             1601189557,
+            1601189560,
+            1601306780,
             1601306785,
             1601306790,
             1601306795,
+            1601399999,
           ].map((x)=>x*1000),
-          y: ['OK', 'Degraded', 'Down', 'OK', 'Degraded', 'Down', 'OK', 'Degraded', 'Down', 'OK'],
+          y: ['OK', 'OK', 'Degraded', 'Degraded', 'Degraded', 'Degraded', 'Degraded', 'Degraded', 'Degraded', 'OK', 'OK', 'Degraded', 'Down', 'OK', 'OK'],
           type: 'scatter',
           mode: 'lines',
           marker: {color: '#ea904f'},
-          line: {shape: 'vh'},
+          line: {shape: 'linear'},
         },
       ]}
       layout={
