@@ -111,6 +111,7 @@ class ItemPlot extends React.Component {
               title: 'min_price (K)',
               titlefont: {color: '#ea904f'},
               tickfont: {color: '#ea904f'},
+              tickformat: ',d',
             },
             yaxis2: {
               title: 'count',
@@ -118,6 +119,7 @@ class ItemPlot extends React.Component {
               tickfont: {color: '#00a6a0'},
               overlaying: 'y',
               side: 'right',
+              tickformat: ',d',
             },
             showlegend: true,
             autosize: true,

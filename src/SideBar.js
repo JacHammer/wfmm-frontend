@@ -95,7 +95,7 @@ function ResponsiveDrawer(props) {
           key={'Status'}
           onClick={()=>{
             props.setShowItemPlotFromSideBar(false);
-            enqueueSnackbar(`Fetching marketplace status`, {variant: 'info'});
+            enqueueSnackbar(`Fetching marketplace status...`, {variant: 'info'});
           }}>
           <ListItemIcon>{<PublicSharpIcon/>}</ListItemIcon>
           <ListItemText primary={'Status'} />

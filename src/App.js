@@ -9,7 +9,7 @@ import ItemPlot from './ItemPlot';
 import SearchBar from './SearchBar';
 import StatePlot from './StatePlot';
 function App() {
-  const [showItemPlot, setShowItemPlot] = useState(false);
+  const [showItemPlot, setShowItemPlot] = useState(true);
   const [e, setEntity] = useState({placeholder: 1, region: 'eu', entity_id: '6109', item_id: 'sr47_gorgona02_shop', title_en: 'Medusa Truvelo CMS 20x42mm'});
   // callback that allows drawer to set region
   const setRegion =(newRegion)=> {
